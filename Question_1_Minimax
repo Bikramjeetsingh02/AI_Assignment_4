@@ -1,0 +1,28 @@
+import math
+
+def minimax (curDepth, nodeIndex,
+			maxTurn, scores,
+			targetDepth):
+
+	# base case : targetDepth reached
+	if (curDepth == targetDepth):							# terminating condition
+		return scores[nodeIndex]
+	
+	if (maxTurn):											# This is if our current move is to choose the maximum value
+		return max(minimax(curDepth + 1, nodeIndex * 3,False, scores, targetDepth),
+				minimax(curDepth + 1, nodeIndex * 3 + 1,False, scores, targetDepth),
+					minimax(curDepth + 1, nodeIndex * 3 + 2,False, scores, targetDepth))
+	
+	else:													# This is if our current move is to choose the minimum value
+		return min(
+			minimax(curDepth + 1, nodeIndex * 3,True, scores, targetDepth),
+			minimax(curDepth + 1, nodeIndex * 3 + 1,True, scores, targetDepth),
+			minimax(curDepth + 1, nodeIndex * 3 + 2,True, scores, targetDepth)
+			)
+
+scores = [3, 12 , 8 , 2 , 1 , 6 , 14 , 5 , 2]						# The input as per the Fig 6.2
+
+treeDepth = math.log(len(scores), 3)
+
+print("The optimal case entered value as per the MINIMAX from the book is: ", end = "")
+print(minimax(0, 0, True, scores, treeDepth))
